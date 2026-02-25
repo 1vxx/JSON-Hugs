@@ -1,0 +1,26 @@
+.resizer {
+  width: 24px;
+  flex-shrink: 0;
+  cursor: col-resize;
+  background-color: transparent;
+  position: relative;
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.2s;
+}
+
+.resizer::after {
+  content: '';
+  width: 4px;
+  height: 30px;
+  border-radius: 4px;
+  background-color: var(--panel-border);
+  transition: background-color 0.2s, height 0.2s;
+}
+
+.resizer:hover::after, .resizer:active::after {
+  background-color: var(--primary);
+  height: 40px;
+}

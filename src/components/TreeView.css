@@ -1,0 +1,125 @@
+.tree-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.tree-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1rem;
+  border-radius: 12px;
+  background: var(--panel-bg);
+  margin-bottom: 1rem;
+}
+
+.tree-title {
+  font-weight: 600;
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+.tree-content {
+  flex: 1;
+  overflow: auto;
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.6;
+  padding-bottom: 2rem;
+}
+
+.node-wrapper {
+  position: relative;
+}
+
+.node-line {
+  display: flex;
+  align-items: center;
+  padding: 2px 4px;
+  border-radius: 6px;
+  cursor: pointer;
+  border: 1px solid transparent;
+  transition: background 0.2s ease, border-color 0.2s ease;
+  min-height: 24px;
+  position: relative;
+}
+
+.node-line:hover {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+[data-theme='dark'] .node-line:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.expand-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  color: var(--text-secondary);
+  margin-left: -20px;
+  transition: color 0.2s;
+}
+
+.node-line:hover .expand-icon {
+  color: var(--primary);
+}
+
+.node-key {
+  color: var(--json-key);
+  font-weight: 500;
+  margin-right: 0.25rem;
+}
+
+.key-colon {
+  color: var(--text-secondary);
+  margin-left: 2px;
+}
+
+.node-value {
+  color: var(--text-primary);
+}
+
+/* Data Type Colors */
+.val-string { color: var(--json-string); }
+.val-number { color: var(--json-number); }
+.val-boolean { color: var(--json-boolean); }
+.val-null { color: var(--json-null); font-weight: bold; }
+.val-complex { color: var(--text-secondary); font-style: italic; }
+
+.node-children {
+  position: relative;
+  /* Add subtle indentation line */
+  border-left: 1px solid var(--panel-border);
+  margin-left: 0.5rem;
+}
+
+.node-close {
+  padding-left: 4px;
+  color: var(--text-primary);
+}
+
+.icon-btn {
+  padding: 4px;
+  border-radius: 4px;
+  color: var(--text-secondary);
+  background: transparent;
+}
+
+.icon-btn:hover {
+  color: var(--primary);
+  background: var(--primary-light);
+}
+
+/* Empty State */
+.empty-tree {
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

@@ -1,0 +1,126 @@
+.app-container {
+  width: 100%;
+  padding: 1rem 2rem;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.app-header {
+  padding: 1rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 20px;
+}
+
+.header-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.logo-icon {
+  color: var(--primary);
+}
+
+.app-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  background: linear-gradient(135deg, var(--primary), #a855f7);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.theme-toggle {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  color: var(--primary);
+  border-width: 2px;
+}
+
+.theme-toggle:hover {
+  background: var(--primary-light);
+  transform: rotate(15deg);
+}
+
+.app-main {
+  flex: 1;
+  min-height: 0;
+}
+
+@media (max-width: 1024px) {
+  .app-main {
+    grid-template-columns: 1fr;
+  }
+}
+
+.editor-section, .visualization-section {
+  display: flex;
+  flex-direction: column;
+  border-radius: 24px;
+  overflow: hidden;
+  min-height: 0;
+}
+
+.panel-header {
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--panel-border);
+  background: rgba(0,0,0,0.02);
+}
+
+.panel-header h2 {
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.panel-content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 1.5rem;
+  overflow: auto;
+  min-height: 0;
+}
+
+.json-input {
+  flex: 1;
+  resize: none;
+  background: transparent;
+  border: 1px solid transparent;
+  width: 100%;
+  height: 100%;
+  min-height: 100px;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+.json-input:focus {
+  border-color: transparent;
+  box-shadow: inset 0 0 0 1px var(--primary-light);
+  background: rgba(255,255,255,0.02);
+}
+
+.viewer-content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.placeholder-text {
+  color: var(--text-secondary);
+  font-style: italic;
+  font-size: 1.1rem;
+  opacity: 0.7;
+}
