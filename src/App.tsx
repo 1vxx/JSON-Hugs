@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { Moon, Sun, Code2 } from 'lucide-react';
+import { Moon, Sun, Code2, Wand2, Check, Maximize2, Minimize2 } from 'lucide-react';
 import { JsonEditor } from './components/JsonEditor';
 import { TreeView } from './components/TreeView';
 import './components/Resizer.css';
@@ -14,6 +14,70 @@ function App() {
   const [leftWidth, setLeftWidth] = useState<number>(50); // percentage
   const containerRef = useRef<HTMLDivElement>(null);
   const isDragging = useRef<boolean>(false);
+  const [copied, setCopied] = useState<boolean>(false);
+  const [isFullscreen, setIsFullscreen] = useState<boolean>(false);
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const generateTypeScript = (obj: any, interfaceName = 'GeneratedRoot'): string => {
+    if (obj === null || obj === undefined) {
+      return `type ${interfaceName} = any;\n`;
+    }
+    if (typeof obj !== 'object' || Array.isArray(obj)) {
+      return `type ${interfaceName} = ${typeof obj};\n`;
+    }
+
+    let interfaceStr = `export interface ${interfaceName} {\n`;
+    const subInterfaces: string[] = [];
+
+    for (const key in obj) {
+      if (Object.prototype.hasOwnProperty.call(obj, key)) {
+        const val = obj[key];
+        const valType = typeof val;
+        
+        let typeAnnotation = 'any';
+        if (val === null) {
+          typeAnnotation = 'null';
+        } else if (Array.isArray(val)) {
+          if (val.length > 0) {
+            const firstElementType = typeof val[0];
+            if (firstElementType === 'object' && val[0] !== null) {
+              const subName = key.charAt(0).toUpperCase() + key.slice(1) + 'Item';
+              subInterfaces.push(generateTypeScript(val[0], subName));
+              typeAnnotation = `${subName}[]`;
+            } else {
+              typeAnnotation = `${firstElementType}[]`;
+            }
+          } else {
+            typeAnnotation = 'any[]';
+          }
+        } else if (valType === 'object') {
+          const subName = key.charAt(0).toUpperCase() + key.slice(1);
+          subInterfaces.push(generateTypeScript(val, subName));
+          typeAnnotation = subName;
+        } else {
+          typeAnnotation = valType;
+        }
+        
+        // Handle keys with spaces or special characters
+        const safeKey = /^[a-zA-Z_$][a-zA-Z0-9_$]*$/.test(key) ? key : `'${key}'`;
+        interfaceStr += `  ${safeKey}: ${typeAnnotation};\n`;
+      }
+    }
+    interfaceStr += '}\n\n';
+    return subInterfaces.join('') + interfaceStr;
+  };
+
+  const handleGenerateTS = () => {
+    if (!parsedJson) return;
+    try {
+      const tsCode = generateTypeScript(parsedJson);
+      navigator.clipboard.writeText(tsCode.trim());
+      setCopied(true);
+      setTimeout(() => setCopied(false), 2000);
+    } catch (e) {
+      console.error('Failed to generate TS interface', e);
+    }
+  };
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
@@ -63,6 +127,17 @@ function App() {
         </div>
         
         <div className="header-actions">
+          {parsedJson !== null && (
+            <button
+              className={`theme-toggle glass-panel ${copied ? 'copied' : ''}`}
+              onClick={handleGenerateTS}
+              aria-label="Generate TypeScript Interface"
+              title="一键生成 TypeScript 接口并复制"
+              style={{ color: copied ? '#4facfe' : 'var(--primary)' }}
+            >
+              {copied ? <Check size={20} /> : <Wand2 size={20} />}
+            </button>
+          )}
           <button 
             className="theme-toggle glass-panel" 
             onClick={toggleTheme}
@@ -89,11 +164,20 @@ function App() {
         <div className="resizer" onMouseDown={startDrag}></div>
 
         <section 
-          className="visualization-section glass-panel"
-          style={{ width: `calc(${100 - leftWidth}% - 12px)`, flexShrink: 0 }}
+          className={`visualization-section glass-panel ${isFullscreen ? 'fullscreen' : ''}`}
+          style={isFullscreen ? {} : { width: `calc(${100 - leftWidth}% - 12px)`, flexShrink: 0 }}
         >
-           <div className="panel-header">
+           <div className="panel-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <h2>Visualization</h2>
+            <button
+              className="theme-toggle"
+              onClick={() => setIsFullscreen(!isFullscreen)}
+              aria-label={isFullscreen ? "Exit Fullscreen" : "Enter Fullscreen"}
+              title={isFullscreen ? "退出全屏" : "全屏展示"}
+              style={{ width: '32px', height: '32px' }}
+            >
+              {isFullscreen ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
+            </button>
           </div>
           <div className="panel-content viewer-content" style={{ padding: 0 }}>
              <TreeView data={parsedJson} />
