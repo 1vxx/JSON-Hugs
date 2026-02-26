@@ -54,6 +54,8 @@ function App() {
           const subName = key.charAt(0).toUpperCase() + key.slice(1);
           subInterfaces.push(generateTypeScript(val, subName));
           typeAnnotation = subName;
+        } else if (valType === 'bigint') {
+          typeAnnotation = 'number';
         } else {
           typeAnnotation = valType;
         }

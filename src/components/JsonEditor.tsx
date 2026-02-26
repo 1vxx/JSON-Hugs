@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Play, AlignLeft, Minimize2, AlertCircle } from 'lucide-react';
+import JSONbig from 'json-bigint';
 import './JsonEditor.css';
 
 interface JsonEditorProps {
@@ -19,7 +20,7 @@ export const JsonEditor: React.FC<JsonEditorProps> = ({ onParsed }) => {
       return;
     }
     try {
-      const parsed = JSON.parse(val);
+      const parsed = JSONbig({ useNativeBigInt: true }).parse(val);
       setError(null);
       onParsed(parsed);
     } catch (err: unknown) {
@@ -36,8 +37,8 @@ export const JsonEditor: React.FC<JsonEditorProps> = ({ onParsed }) => {
 
   const handleFormat = () => {
     try {
-      const parsed = JSON.parse(inputData);
-      setInputData(JSON.stringify(parsed, null, 2));
+      const parsed = JSONbig({ useNativeBigInt: true }).parse(inputData);
+      setInputData(JSONbig.stringify(parsed, null, 2));
       setError(null);
       onParsed(parsed);
     } catch {
@@ -47,8 +48,8 @@ export const JsonEditor: React.FC<JsonEditorProps> = ({ onParsed }) => {
 
   const handleMinify = () => {
     try {
-      const parsed = JSON.parse(inputData);
-      setInputData(JSON.stringify(parsed));
+      const parsed = JSONbig({ useNativeBigInt: true }).parse(inputData);
+      setInputData(JSONbig.stringify(parsed));
       setError(null);
       onParsed(parsed);
     } catch {
@@ -69,7 +70,7 @@ export const JsonEditor: React.FC<JsonEditorProps> = ({ onParsed }) => {
       nullValue: null,
       magicNumber: 42
     };
-    setInputData(JSON.stringify(demoJson, null, 2));
+    setInputData(JSONbig.stringify(demoJson, undefined, 2));
     onParsed(demoJson);
     setError(null);
   };

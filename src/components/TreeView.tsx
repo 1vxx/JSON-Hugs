@@ -114,7 +114,7 @@ const TreeNode: React.FC<TreeNodeProps> = ({
   const renderValue = () => {
     if (value === null) return <span className="val-null">null</span>;
     if (typeof value === 'string') return <span className="val-string">"{value}"</span>;
-    if (typeof value === 'number') return <span className="val-number">{value}</span>;
+    if (typeof value === 'number' || typeof value === 'bigint') return <span className="val-number">{value.toString()}</span>;
     if (typeof value === 'boolean') return <span className="val-boolean">{value ? 'true' : 'false'}</span>;
     
     if (isArray) {
