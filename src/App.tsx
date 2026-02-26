@@ -167,7 +167,7 @@ function App() {
           className={`visualization-section glass-panel ${isFullscreen ? 'fullscreen' : ''}`}
           style={isFullscreen ? {} : { width: `calc(${100 - leftWidth}% - 12px)`, flexShrink: 0 }}
         >
-           <div className="panel-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+           <div className="panel-header">
             <h2>Visualization</h2>
             <button
               className="theme-toggle"

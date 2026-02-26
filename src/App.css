@@ -98,9 +98,14 @@
   padding: 1rem 1.5rem;
   border-bottom: 1px solid var(--panel-border);
   background: rgba(0,0,0,0.02);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 60px;
 }
 
 .panel-header h2 {
+  margin: 0;
   font-size: 1.1rem;
   color: var(--text-secondary);
   font-weight: 600;
