@@ -27,29 +27,23 @@
 }
 
 .app-title {
-  font-size: 1.5rem;
-  font-weight: 700;
-  background: linear-gradient(
-    to right,
-    #00f2fe,
-    #4facfe,
-    #a855f7,
-    #f27121,
-    #00f2fe
-  );
-  background-size: 200% auto;
-  color: transparent;
+  font-size: 1.6rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--primary) 0%, var(--json-key) 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  animation: shine 4s linear infinite;
-  letter-spacing: 0.5px;
+  color: transparent;
+  letter-spacing: -0.5px;
+  position: relative;
+  display: inline-block;
+  text-shadow: 0 4px 12px var(--primary-light);
+  transition: var(--transition-normal);
 }
 
-@keyframes shine {
-  to {
-    background-position: 200% center;
-  }
+.app-title:hover {
+  transform: translateY(-1px);
+  text-shadow: 0 6px 16px var(--primary-light);
 }
 
 .theme-toggle {
