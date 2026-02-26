@@ -11,7 +11,7 @@ function App() {
     return (saved === 'dark' || saved === 'light') ? saved : 'light';
   });
   const [parsedJson, setParsedJson] = useState<unknown>(null);
-  const [leftWidth, setLeftWidth] = useState<number>(50); // percentage
+  const [leftWidth, setLeftWidth] = useState<number>(35); // percentage
   const containerRef = useRef<HTMLDivElement>(null);
   const isDragging = useRef<boolean>(false);
   const [copied, setCopied] = useState<boolean>(false);
